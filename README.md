@@ -63,3 +63,27 @@
 - [ ] 撰寫單元測試 (如果時間允許)
 - [ ] 部署專案 (例如到本地 IIS 或 Azure App Service)
 - [ ] 準備專案說明文件/展示內容
+
+---
+
+## 如何執行 Web 應用程式 (How to Run the Web Application)
+
+1.  **啟動 SQL Server Docker 容器 (如果尚未運行):** 
+    ```bash
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=YourStrong@Password123" \
+       -p 1433:1433 --name sql_server_db -d mcr.microsoft.com/mssql/server:2022-latest
+    ```
+    **請務必將 `YourStrong@Password123` 替換為您設定的實際密碼。**
+
+2.  **更新 `appsettings.json` 中的資料庫連接字串 (如果尚未更新):** 
+    確保 `src/SmartDeviceMonitoring.Web/appsettings.json` 中的 `DefaultConnection` 如下所示，並替換為您的密碼：
+    ```json
+    "DefaultConnection": "Server=localhost,1433;Database=SmartDeviceMonitoringDb;User Id=sa;Password=YourStrong@Password123;MultipleActiveResultSets=true;TrustServerCertificate=True"
+    ```
+
+3.  **執行 Web 應用程式:** 
+    在專案根目錄下執行以下命令：
+    ```bash
+    dotnet run --project src/SmartDeviceMonitoring.Web/SmartDeviceMonitoring.Web.csproj
+    ```
+    應用程式啟動後，通常會自動在瀏覽器中打開 `https://localhost:70xx` (埠號可能不同) 或 `http://localhost:5xxx`。
