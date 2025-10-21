@@ -62,7 +62,7 @@
 ---
 
 ## 開發進度
-- [ ] 初始化專案結構 (ASP.NET MVC, .NET Console App)
+- [x] 初始化專案結構 (ASP.NET MVC, .NET Console App)
 - [ ] 設計並建立 SQL Server 資料庫 (設備、感測器、數據、警報等資料表)
 - [ ] 實作設備與感測器管理模組 (CRUD)
 - [ ] 開發數據採集模擬器與預警服務 (.NET Console App)
@@ -72,3 +72,123 @@
 - [ ] 撰寫單元測試 (如果時間允許)
 - [ ] 部署專案 (例如到本地 IIS 或 Azure App Service)
 - [ ] 準備專案說明文件/展示內容
+
+---
+
+## 專案資料夾結構 (Project Folder Structure)
+
+```
+/smart-device-monitoring-platform
+├───GEMINI.md
+├───.git/...
+└───src/
+    ├───SmartDeviceMonitoring.Web/
+    └───SmartDeviceMonitoring.ConsoleApp/
+```
+
+---
+
+## 資料庫結構規劃 (Database Schema Plan)
+
+### 1. `Devices` Table (設備)
+*   `DeviceId` (INT, Primary Key, IDENTITY): Unique identifier for the device.
+*   `DeviceName` (NVARCHAR(255), NOT NULL): Name of the device (e.g., "Server Room AC Unit", "Production Line Machine 1").
+*   `Location` (NVARCHAR(255), NULL): Physical location of the device.
+*   `Description` (NVARCHAR(MAX), NULL): Detailed description of the device.
+*   `IsActive` (BIT, NOT NULL, DEFAULT 1): Indicates if the device is currently active.
+*   `CreatedAt` (DATETIME2, NOT NULL, DEFAULT GETDATE()): Timestamp when the device record was created.
+*   `UpdatedAt` (DATETIME2, NOT NULL, DEFAULT GETDATE()): Timestamp when the device record was last updated.
+
+### 2. `SensorTypes` Table (感測器類型)
+*   `SensorTypeId` (INT, Primary Key, IDENTITY): Unique identifier for the sensor type.
+*   `TypeName` (NVARCHAR(100), NOT NULL, UNIQUE): Name of the sensor type (e.g., "Temperature Sensor", "Humidity Sensor", "Pressure Sensor").
+*   `Unit` (NVARCHAR(50), NULL): Unit of measurement (e.g., "°C", "%", "psi").
+*   `Description` (NVARCHAR(MAX), NULL): Description of the sensor type.
+
+### 3. `Sensors` Table (感測器)
+*   `SensorId` (INT, Primary Key, IDENTITY): Unique identifier for the sensor.
+*   `SensorName` (NVARCHAR(255), NOT NULL): Name of the sensor (e.g., "AC Unit Temp Sensor 1", "Machine 1 Pressure Sensor").
+*   `DeviceId` (INT, Foreign Key to `Devices.DeviceId`, NOT NULL): The device this sensor belongs to.
+*   `SensorTypeId` (INT, Foreign Key to `SensorTypes.SensorTypeId`, NOT NULL): The type of this sensor.
+*   `MinThreshold` (DECIMAL(18, 2), NULL): Minimum acceptable value for this sensor.
+*   `MaxThreshold` (DECIMAL(18, 2), NULL): Maximum acceptable value for this sensor.
+*   `IsActive` (BIT, NOT NULL, DEFAULT 1): Indicates if the sensor is currently active.
+*   `CreatedAt` (DATETIME2, NOT NULL, DEFAULT GETDATE()): Timestamp when the sensor record was created.
+*   `UpdatedAt` (DATETIME2, NOT NULL, DEFAULT GETDATE()): Timestamp when the sensor record was last updated.
+
+### 4. `SensorData` Table (監控數據)
+*   `DataId` (BIGINT, Primary Key, IDENTITY): Unique identifier for the data point.
+*   `SensorId` (INT, Foreign Key to `Sensors.SensorId`, NOT NULL): The sensor that collected this data.
+*   `Value` (DECIMAL(18, 2), NOT NULL): The measured value from the sensor.
+*   `Timestamp` (DATETIME2, NOT NULL, DEFAULT GETDATE()): Timestamp when the data was recorded.
+
+### 5. `Alerts` Table (警報)
+*   `AlertId` (BIGINT, Primary Key, IDENTITY): Unique identifier for the alert.
+*   `SensorId` (INT, Foreign Key to `Sensors.SensorId`, NOT NULL): The sensor that triggered the alert.
+*   `AlertType` (NVARCHAR(50), NOT NULL): Type of alert (e.g., "High Threshold Exceeded", "Low Threshold Exceeded", "Offline").
+*   `TriggerValue` (DECIMAL(18, 2), NOT NULL): The value that triggered the alert.
+*   `AlertTime` (DATETIME2, NOT NULL, DEFAULT GETDATE()): Timestamp when the alert was triggered.
+*   `IsResolved` (BIT, NOT NULL, DEFAULT 0): Indicates if the alert has been resolved.
+*   `ResolvedTime` (DATETIME2, NULL): Timestamp when the alert was resolved.
+*   `Notes` (NVARCHAR(MAX), NULL): Any additional notes about the alert.
+
+### Relationships:
+*   `Devices` 1-to-Many `Sensors` (One device can have many sensors).
+*   `SensorTypes` 1-to-Many `Sensors` (One sensor type can be associated with many sensors).
+*   `Sensors` 1-to-Many `SensorData` (One sensor can generate many data points).
+*   `Sensors` 1-to-Many `Alerts` (One sensor can trigger many alerts).
+
+```mermaid
+erDiagram
+    DEVICES ||--o{ SENSORS : "has"
+    SENSORTYPES ||--o{ SENSORS : "defines"
+    SENSORS ||--o{ SENSORDATA : "generates"
+    SENSORS ||--o{ ALERTS : "triggers"
+
+    DEVICES {
+        int DeviceId PK
+        string DeviceName
+        string Location
+        string Description
+        bool IsActive
+        datetime CreatedAt
+        datetime UpdatedAt
+    }
+
+    SENSORTYPES {
+        int SensorTypeId PK
+        string TypeName
+        string Unit
+        string Description
+    }
+
+    SENSORS {
+        int SensorId PK
+        string SensorName
+        int DeviceId FK
+        int SensorTypeId FK
+        decimal MinThreshold
+        decimal MaxThreshold
+        bool IsActive
+        datetime CreatedAt
+        datetime UpdatedAt
+    }
+
+    SENSORDATA {
+        long DataId PK
+        int SensorId FK
+        decimal Value
+        datetime Timestamp
+    }
+
+    ALERTS {
+        long AlertId PK
+        int SensorId FK
+        string AlertType
+        decimal TriggerValue
+        datetime AlertTime
+        bool IsResolved
+        datetime ResolvedTime
+        string Notes
+    }
+```

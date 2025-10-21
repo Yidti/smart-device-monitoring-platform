@@ -1,0 +1,29 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.bak
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+*.pdb
+*.exe
+*.dll
+
+# Packages
+*.nupkg
+*.snupkg
+*.vsix
+.nuget/
+packages/
+
+# Rider
+.idea/
+
+# Misc
+*.log
+temp/
+node_modules/
