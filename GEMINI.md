@@ -66,7 +66,7 @@
 - [x] 設計並建立 SQL Server 資料庫 (設備、感測器、數據、警報等資料表)
 - [x] 實作設備與感測器管理模組 (CRUD)
 - [x] 實作資料種子 (Data Seeding) - 透過 `src/SmartDeviceMonitoring.Web/Data/seeddata.json` 檔案和 `SeedData.cs` 類別在應用程式啟動時填充初始設備資料。
-- [ ] 開發數據採集模擬器與預警服務 (.NET Console App)
+- [x] 開發數據採集模擬器與預警服務 (.NET Console App)
 - [ ] 實作實時數據監控儀表板
 - [ ] 實作歷史數據查詢與分析功能
 - [ ] 實作舊版設備配置頁面 (模擬傳統風格)

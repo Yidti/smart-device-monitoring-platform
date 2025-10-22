@@ -12,66 +12,106 @@ namespace SmartDeviceMonitoring.Web.Data
 {
     public static class SeedData
     {
+        private class SeedDataContent
+        {
+            public List<Device> Devices { get; set; }
+            public List<SensorType> SensorTypes { get; set; }
+        }
+
         public static async Task Initialize(IServiceProvider serviceProvider)
         {
-            using (var context = new ApplicationDbContext(
-                serviceProvider.GetRequiredService<
-                    DbContextOptions<ApplicationDbContext>>()))
+            using (var scope = serviceProvider.CreateScope())
             {
-                // Look for any devices.
-                if (context.Devices.Any())
-                {
-                    return;   // DB has been seeded
-                }
+                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-                // Read seeddata.json
-                var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "seeddata.json");
-                if (!File.Exists(jsonFilePath))
-                {
-                    // Fallback for when running from the project root directly
-                    jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "src", "SmartDeviceMonitoring.Web", "Data", "seeddata.json");
-                }
+                // Ensure database is created and migrations are applied
+                await context.Database.MigrateAsync();
 
-                if (File.Exists(jsonFilePath))
+                // Seed SensorTypes
+                if (!context.SensorTypes.Any())
                 {
-                    var jsonString = await File.ReadAllTextAsync(jsonFilePath);
-                    var devices = JsonSerializer.Deserialize<List<Device>>(jsonString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-                    if (devices != null && devices.Any())
+                    var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "seeddata.json");
+                    if (!File.Exists(jsonFilePath))
                     {
-                        foreach (var device in devices)
+                        jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "src", "SmartDeviceMonitoring.Web", "Data", "seeddata.json");
+                    }
+
+                    if (File.Exists(jsonFilePath))
+                    {
+                        var jsonString = await File.ReadAllTextAsync(jsonFilePath);
+                        var seedContent = JsonSerializer.Deserialize<SeedDataContent>(jsonString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                        if (seedContent?.SensorTypes != null && seedContent.SensorTypes.Any())
                         {
-                            device.CreatedAt = DateTime.UtcNow;
-                            device.UpdatedAt = DateTime.UtcNow;
-                            context.Devices.Add(device);
+                            foreach (var sensorType in seedContent.SensorTypes)
+                            {
+                                context.SensorTypes.Add(sensorType);
+                            }
+                            await context.SaveChangesAsync();
                         }
+                    }
+                    else
+                    {
+                        // Fallback: If JSON file not found, create some default sensor types
+                        context.SensorTypes.AddRange(
+                            new SensorType { TypeName = "Temperature", Unit = "°C", Description = "Measures temperature" },
+                            new SensorType { TypeName = "Humidity", Unit = "%", Description = "Measures relative humidity" },
+                            new SensorType { TypeName = "Pressure", Unit = "psi", Description = "Measures pressure" }
+                        );
                         await context.SaveChangesAsync();
                     }
                 }
-                else
+
+                // Seed Devices
+                if (!context.Devices.Any())
                 {
-                    // If JSON file not found, create some default devices
-                    context.Devices.AddRange(
-                        new Device
+                    var jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "seeddata.json");
+                    if (!File.Exists(jsonFilePath))
+                    {
+                        jsonFilePath = Path.Combine(Directory.GetCurrentDirectory(), "src", "SmartDeviceMonitoring.Web", "Data", "seeddata.json");
+                    }
+
+                    if (File.Exists(jsonFilePath))
+                    {
+                        var jsonString = await File.ReadAllTextAsync(jsonFilePath);
+                        var seedContent = JsonSerializer.Deserialize<SeedDataContent>(jsonString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                        if (seedContent?.Devices != null && seedContent.Devices.Any())
                         {
-                            DeviceName = "Default Device 1",
-                            Location = "Lab",
-                            Description = "First default device",
-                            IsActive = true,
-                            CreatedAt = DateTime.UtcNow,
-                            UpdatedAt = DateTime.UtcNow
-                        },
-                        new Device
-                        {
-                            DeviceName = "Default Device 2",
-                            Location = "Warehouse",
-                            Description = "Second default device",
-                            IsActive = true,
-                            CreatedAt = DateTime.UtcNow,
-                            UpdatedAt = DateTime.UtcNow
+                            foreach (var device in seedContent.Devices)
+                            {
+                                device.CreatedAt = DateTime.UtcNow;
+                                device.UpdatedAt = DateTime.UtcNow;
+                                context.Devices.Add(device);
+                            }
+                            await context.SaveChangesAsync();
                         }
-                    );
-                    await context.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        // Fallback: If JSON file not found, create some default devices
+                        context.Devices.AddRange(
+                            new Device
+                            {
+                                DeviceName = "Default Device 1",
+                                Location = "Lab",
+                                Description = "First default device",
+                                IsActive = true,
+                                CreatedAt = DateTime.UtcNow,
+                                UpdatedAt = DateTime.UtcNow
+                            },
+                            new Device
+                            {
+                                DeviceName = "Default Device 2",
+                                Location = "Warehouse",
+                                Description = "Second default device",
+                                IsActive = true,
+                                CreatedAt = DateTime.UtcNow,
+                                UpdatedAt = DateTime.UtcNow
+                            }
+                        );
+                        await context.SaveChangesAsync();
+                    }
                 }
             }
         }
