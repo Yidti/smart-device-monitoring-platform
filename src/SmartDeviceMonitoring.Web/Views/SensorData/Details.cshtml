@@ -6,36 +6,39 @@
 
 <h1>Sensor Data Details</h1>
 
-<div>
-    <h4>SensorData</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Sensor!.SensorName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Sensor!.SensorName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Sensor!.Device!.DeviceName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Sensor!.Device!.DeviceName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Value)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Value)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Timestamp)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Timestamp)
-        </dd>
-    </dl>
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h4>SensorData</h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Sensor!.SensorName)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Sensor!.SensorName)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Sensor!.Device!.DeviceName)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Sensor!.Device!.DeviceName)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Value)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Value)
+            </dd>
+            <dt class="col-sm-3">
+                @Html.DisplayNameFor(model => model.Timestamp)
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Timestamp)
+            </dd>
+        </dl>
+    </div>
 </div>
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Back to List</a>
 </div>

@@ -1,5 +1,56 @@
 html {
   font-size: 14px;
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --info-color: #17a2b8;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --body-bg: #f4f7f6;
+  --text-color: #333;
+}
+
+body {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--body-bg);
+  color: var(--text-color);
+  margin-bottom: 60px;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.navbar {
+  background-color: var(--light-color) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.navbar-brand {
+  color: var(--primary-color) !important;
+  font-weight: 600;
+}
+
+.nav-link {
+  color: var(--dark-color) !important;
+}
+
+.nav-link:hover {
+  color: var(--primary-color) !important;
+}
+
+.footer {
+  background-color: var(--light-color);
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  color: var(--secondary-color);
 }
 
 @media (min-width: 768px) {
@@ -9,14 +60,10 @@ html {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem var(--primary-color);
 }
 
 html {
   position: relative;
   min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
 }
