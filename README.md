@@ -95,3 +95,19 @@
     ```bash
     docker-compose down
     ```
+
+---
+
+## 如何執行 Console 應用程式 (How to Run the Console Application)
+
+1.  **確保 SQL Server Docker 容器正在運行。** 您可以使用 `docker ps` 檢查其狀態。如果它沒有運行，請從專案根目錄使用 `docker-compose up -d` 啟動它。
+
+2.  **執行 Console 應用程式:**
+    在專案根目錄下執行以下命令：
+    ```bash
+    dotnet run --project src/SmartDeviceMonitoring.ConsoleApp/SmartDeviceMonitoring.ConsoleApp.csproj
+    ```
+    Console 應用程式將會持續模擬數據並檢查警報。您會在終端機中看到相關輸出。
+
+3.  **停止 Console 應用程式:**
+    要停止 Console 應用程式，請在運行它的終端機中按下 `Ctrl+C`。

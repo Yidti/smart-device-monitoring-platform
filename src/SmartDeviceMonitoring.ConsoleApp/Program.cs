@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace SmartDeviceMonitoring.ConsoleApp
 {
@@ -24,7 +25,12 @@ namespace SmartDeviceMonitoring.ConsoleApp
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, configuration) =>
                 {
-                    configuration.SetBasePath(Directory.GetCurrentDirectory());
+                    var basePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                    if (string.IsNullOrEmpty(basePath) || !File.Exists(Path.Combine(basePath, "appsettings.json")))
+                    {
+                        basePath = Path.Combine(Directory.GetCurrentDirectory(), "src", "SmartDeviceMonitoring.ConsoleApp");
+                    }
+                    configuration.SetBasePath(basePath);
                     configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
                     configuration.AddEnvironmentVariables();
                 })
@@ -114,7 +120,7 @@ namespace SmartDeviceMonitoring.ConsoleApp
                             AlertType = simulatedValue < sensor.MinThreshold ? "Low Threshold Exceeded" : "High Threshold Exceeded",
                             TriggerValue = simulatedValue,
                             AlertTime = DateTime.UtcNow,
-                            IsResolved = false
+                            Notes = "" // Add this line to initialize Notes
                         };
                         context.Alerts.Add(alert);
                         Console.WriteLine($"ALERT! Device: {device.DeviceName}, Sensor: {sensor.SensorName}, Value: {simulatedValue}");
