@@ -68,7 +68,7 @@
 - [x] 實作資料種子 (Data Seeding) - 透過 `src/SmartDeviceMonitoring.Web/Data/seeddata.json` 檔案和 `SeedData.cs` 類別在應用程式啟動時填充初始設備資料。
 - [x] 開發數據採集模擬器與預警服務 (.NET Console App)
 - [x] 實作實時數據監控儀表板
-- [ ] 實作歷史數據查詢與分析功能
+- [x] 實作歷史數據查詢與分析功能
 - [ ] 實作舊版設備配置頁面 (模擬傳統風格)
 - [ ] 撰寫單元測試 (如果時間允許)
 - [ ] 部署專案 (例如到本地 IIS 或 Azure App Service)

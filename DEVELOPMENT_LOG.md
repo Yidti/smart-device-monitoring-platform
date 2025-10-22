@@ -153,3 +153,13 @@
 
 *   **動作：** 建立感測器數據相關的 Razor 視圖 (`Index.cshtml`, `Details.cshtml`)。
     *   **結果：** 所有視圖檔案成功建立。
+
+### 6. 實作歷史數據查詢與分析功能 (Historical Data Query & Analysis)
+
+**目標：** 允許用戶查詢和分析歷史感測器數據。
+
+*   **動作：** 修改 `SensorDataController.cs` 的 `Index` 動作，以支援按設備、感測器類型、開始日期和結束日期進行篩選。
+    *   **結果：** `SensorDataController.cs` 已更新，包含篩選邏輯和 `ViewBag` 以填充下拉式選單。
+
+*   **動作：** 修改 `src/SmartDeviceMonitoring.Web/Views/SensorData/Index.cshtml`，以包含篩選表單和顯示感測器類型名稱。
+    *   **結果：** `Index.cshtml` 已更新，包含篩選 UI。
