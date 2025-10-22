@@ -111,3 +111,23 @@
 
 3.  **停止 Console 應用程式:**
     要停止 Console 應用程式，請在運行它的終端機中按下 `Ctrl+C`。
+
+---
+
+## 頁面類型說明 (Page Type Explanation)
+
+本專案的 Web 應用程式 (`SmartDeviceMonitoring.Web`) 旨在展示不同 Web 開發範式的實作能力。
+
+### 現代頁面 (Modern Pages)
+
+*   **範例:** 設備管理頁面 (`/Devices`), 感測器數據頁面 (`/SensorData`)。
+*   **技術:** 使用 ASP.NET Core MVC 的標準模式，包括 Razor Views、Tag Helpers、Model Binding 等現代功能。這些頁面提供流暢的用戶體驗，並利用最新的 .NET Web 技術。
+*   **目的:** 展示對現代 Web 開發框架和最佳實踐的掌握。
+
+### 舊版風格頁面 (Legacy-Style Pages)
+
+*   **範例:** 舊版設備配置頁面 (尚未實作)。
+*   **技術:** 這些頁面將刻意模擬傳統 Web 應用程式的互動模式。它們將使用 Razor Page (而非 MVC View) 搭配基於 Postback 的 jQuery/AJAX 操作，避免使用現代前端框架。
+*   **目的:** 證明對傳統 Web 開發模式的理解，以及維護和擴展舊有系統的能力。這在許多企業環境中是一項寶貴的技能，因為現有系統可能採用較舊的技術。
+
+---
