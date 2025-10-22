@@ -27,3 +27,4 @@ packages/
 *.log
 temp/
 node_modules/
+.DS_Store
