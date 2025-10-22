@@ -163,3 +163,17 @@
 
 *   **動作：** 修改 `src/SmartDeviceMonitoring.Web/Views/SensorData/Index.cshtml`，以包含篩選表單和顯示感測器類型名稱。
     *   **結果：** `Index.cshtml` 已更新，包含篩選 UI。
+
+### 7. 實作舊版設備配置頁面 (Legacy Device Configuration Page Simulation)
+
+**目標：** 建立一個模擬傳統 Web 應用程式互動模式的設備配置頁面。
+
+*   **動作：** 在 `src/SmartDeviceMonitoring.Web/Pages` 目錄中啟用 Razor Pages。
+    *   **命令：** 在 `Program.cs` 中新增 `builder.Services.AddRazorPages();` 和 `app.MapRazorPages();`。
+    *   **結果：** Razor Pages 功能已啟用。
+
+*   **動作：** 建立 `src/SmartDeviceMonitoring.Web/Pages/LegacyDeviceConfig.cshtml.cs` (Code-behind)。
+    *   **結果：** `LegacyDeviceConfig.cshtml.cs` 檔案成功建立，包含處理設備選擇、新增、編輯和刪除的邏輯。
+
+*   **動作：** 建立 `src/SmartDeviceMonitoring.Web/Pages/LegacyDeviceConfig.cshtml` (Razor Page)。
+    *   **結果：** `LegacyDeviceConfig.cshtml` 檔案成功建立，包含 HTML 結構、設備選擇下拉式選單、設備詳細資訊表單以及使用 jQuery/AJAX 實現的「Postback-like」互動邏輯。

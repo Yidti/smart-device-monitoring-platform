@@ -1,0 +1,145 @@
+@page
+@model SmartDeviceMonitoring.Web.Pages.LegacyDeviceConfigModel
+@{
+    ViewData["Title"] = "Legacy Device Configuration";
+}
+
+<h1>Legacy Device Configuration</h1>
+
+<p>
+    This page simulates an older device configuration interface using traditional HTML forms and jQuery/AJAX for "postback-like" interactions.
+</p>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Select Device</h2>
+        <select id="deviceSelector" class="form-control" onchange="selectDevice(this.value)">
+            <option value="">-- Select a Device --</option>
+            @foreach (var device in Model.Devices)
+            {
+                <option value="@device.DeviceId" selected="@(Model.Device?.DeviceId == device.DeviceId)">@device.DeviceName</option>
+            }
+        </select>
+        <br />
+        <button type="button" class="btn btn-success" onclick="createNewDevice()">Create New Device</button>
+    </div>
+    <div class="col-md-6">
+        <h2>Device Details</h2>
+        <form id="deviceForm" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Device.DeviceId" id="deviceId" />
+
+            <div class="form-group">
+                <label asp-for="Device.DeviceName" class="control-label"></label>
+                <input asp-for="Device.DeviceName" class="form-control" id="deviceName" />
+                <span asp-validation-for="Device.DeviceName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Device.Location" class="control-label"></label>
+                <input asp-for="Device.Location" class="form-control" id="deviceLocation" />
+                <span asp-validation-for="Device.Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Device.Description" class="control-label"></label>
+                <input asp-for="Device.Description" class="form-control" id="deviceDescription" />
+                <span asp-validation-for="Device.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Device.IsActive" id="deviceIsActive" /> @Html.DisplayNameFor(model => model.Device.IsActive)
+                </label>
+            </div>
+            <br />
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="saveDevice()">Save Device</button>
+                <button type="button" class="btn btn-danger" onclick="deleteDevice()">Delete Device</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function selectDevice(deviceId) {
+            if (deviceId) {
+                window.location.href = '?id=' + deviceId;
+            } else {
+                window.location.href = window.location.pathname; // Clear selection
+            }
+        }
+
+        function createNewDevice() {
+            window.location.href = window.location.pathname; // Go to empty form
+        }
+
+        function saveDevice() {
+            var deviceId = $('#deviceId').val();
+            var deviceName = $('#deviceName').val();
+            var deviceLocation = $('#deviceLocation').val();
+            var deviceDescription = $('#deviceDescription').val();
+            var deviceIsActive = $('#deviceIsActive').is(':checked');
+
+            var data = {
+                'Device.DeviceId': deviceId,
+                'Device.DeviceName': deviceName,
+                'Device.Location': deviceLocation,
+                'Device.Description': deviceDescription,
+                'Device.IsActive': deviceIsActive,
+                '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() // Include anti-forgery token
+            };
+
+            $.ajax({
+                url: '?handler=Save', // Calls OnPostSaveAsync
+                type: 'POST',
+                data: data,
+                success: function (response) {
+                    if (response.error) {
+                        alert('Error: ' + response.error);
+                    } else {
+                        alert('Device saved successfully!');
+                        window.location.reload(); // Reload to update list
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('AJAX Error: ' + error);
+                }
+            });
+        }
+
+        function deleteDevice() {
+            if (confirm('Are you sure you want to delete this device?')) {
+                var deviceId = $('#deviceId').val();
+                if (deviceId) {
+                    var data = {
+                        'id': deviceId,
+                        '__RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() // Include anti-forgery token
+                    };
+
+                    $.ajax({
+                        url: '?handler=Delete', // Calls OnPostDeleteAsync
+                        type: 'POST',
+                        data: data,
+                        success: function (response) {
+                            if (response.error) {
+                                alert('Error: ' + response.error);
+                            }
+                            else {
+                                alert('Device deleted successfully!');
+                                window.location.reload(); // Reload to update list
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert('AJAX Error: ' + error);
+                        }
+                    });
+                } else {
+                    alert('No device selected for deletion.');
+                }
+            }
+        }
+    </script>
+}
