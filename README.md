@@ -52,6 +52,32 @@
 
 ---
 
+## 資料庫遷移 (Database Migrations)
+
+本專案使用 Entity Framework Core 的資料庫遷移功能來管理資料庫結構的變更。當資料模型 (Models) 發生變化時，需要執行以下步驟來更新資料庫：
+
+1.  **建立遷移 (Add Migration):**
+    當您修改了 `Models` 資料夾下的任何實體類別 (例如 `Device.cs`, `Sensor.cs` 等)，或者對資料庫上下文 (`ApplicationDbContext.cs`) 進行了更改時，需要建立一個新的遷移來記錄這些變更。
+    在 `src/SmartDeviceMonitoring.Web` 目錄下執行：
+    ```bash
+    dotnet ef migrations add [MigrationName]
+    ```
+    *   `[MigrationName]` 應該是一個描述本次變更的名稱，例如 `AddAlertTimeFieldToAlert`。
+    *   這個命令會生成一個新的遷移檔案，其中包含了將資料庫從舊狀態更新到新狀態所需的 C# 程式碼。
+
+2.  **更新資料庫 (Update Database):**
+    建立遷移檔案後，需要將這些變更應用到實際的資料庫中。
+    在 `src/SmartDeviceMonitoring.Web` 目錄下執行：
+    ```bash
+    dotnet ef database update
+    ```
+    *   這個命令會執行所有尚未應用到資料庫的遷移，從而更新資料庫結構以匹配最新的資料模型。
+    *   在開發過程中，特別是當您與團隊成員協作時，定期執行此命令以確保您的本地資料庫是最新的狀態非常重要。
+
+這些命令確保了資料庫結構與應用程式的資料模型保持同步，並且可以追蹤資料庫結構的歷史變更。
+
+---
+
 ## 開發進度
 - [x] 初始化專案結構 (ASP.NET MVC, .NET Console App)
 - [x] 設計並建立 SQL Server 資料庫 (設備、感測器、數據、警報等資料表)

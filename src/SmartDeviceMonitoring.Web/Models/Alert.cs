@@ -23,6 +23,9 @@ namespace SmartDeviceMonitoring.Web.Models
         public decimal TriggerValue { get; set; }
 
         [Required]
+        public DateTime AlertTime { get; set; } = DateTime.UtcNow;
+
+        [Required]
         public bool IsResolved { get; set; } = false;
 
         public DateTime? ResolvedTime { get; set; }
