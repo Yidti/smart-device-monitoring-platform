@@ -175,3 +175,21 @@
 *   **目的:** 證明對傳統 Web 開發模式的深入理解，以及在現代環境中維護、理解和擴展舊有系統的能力。這在許多企業環境中是一項寶貴的技能，因為現有系統可能採用較舊的技術和互動範式。
 
 ---
+
+## 介面截圖 (Interface Screenshots)
+
+以下是平台主要頁面的截圖，展示了現代化的介面設計。
+
+### 首頁儀表板 (Home Dashboard)
+![首頁儀表板](assets/images/Home.png)
+
+### 設備管理 (Device Management)
+![設備管理](assets/images/Devices.png)
+
+### 感測器數據 (Sensor Data)
+![感測器數據](assets/images/SensorData.png)
+
+### 舊版設備配置頁面 (Legacy Device Configuration Page)
+![舊版設備配置頁面](assets/images/LegacyDeviceConfig.png)
+
+---
