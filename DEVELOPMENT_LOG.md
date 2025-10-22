@@ -99,3 +99,44 @@
 
 *   **動作：** 在 `GEMINI.md` 和 `README.md` 中將「設計並建立 SQL Server 資料庫」任務標記為完成。
     *   **結果：** 核取方塊從 `[ ]` 更新為 `[x]`。
+
+### 3. 實作設備與感測器管理模組 (CRUD)
+
+**目標：** 實作設備的 CRUD 功能。
+
+*   **動作：** 建立 `DevicesController.cs` 處理設備的 CRUD 邏輯。
+    *   **結果：** `DevicesController.cs` 成功建立。
+
+*   **動作：** 建立 `src/SmartDeviceMonitoring.Web/Views/Devices` 目錄。
+    *   **結果：** 目錄成功建立。
+
+*   **動作：** 建立設備相關的 Razor 視圖 (`Index.cshtml`, `Details.cshtml`, `Create.cshtml`, `Edit.cshtml`, `Delete.cshtml`)。
+    *   **結果：** 所有視圖檔案成功建立。
+
+*   **動作：** 在 `GEMINI.md` 和 `README.md` 中將「實作設備與感測器管理模組 (CRUD)」任務標記為完成。
+    *   **結果：** 核取方塊從 `[ ]` 更新為 `[x]`。
+
+### 4. 實作資料種子 (Data Seeding)
+
+**目標：** 在應用程式啟動時，使用虛擬資料填充資料庫。
+
+*   **動作：** 建立 `src/SmartDeviceMonitoring.Web/Data/seeddata.json` 檔案，包含範例設備資料。
+    *   **結果：** `seeddata.json` 檔案成功建立。
+
+*   **動作：** 將 `Microsoft.Extensions.DependencyInjection` NuGet 套件新增到 `SmartDeviceMonitoring.Web` 專案。
+    *   **結果：** 套件成功新增。
+
+*   **動作：** 建立 `src/SmartDeviceMonitoring.Web/Data/SeedData.cs` 類別，負責讀取 JSON 資料並將其插入資料庫。
+    *   **結果：** `SeedData.cs` 檔案成功建立。
+
+*   **動作：** 修改 `src/SmartDeviceMonitoring.Web/Program.cs`，在應用程式啟動時呼叫 `SeedData.Initialize` 方法，以執行資料種子。
+    *   **結果：** `Program.cs` 已更新，包含資料種子邏輯和必要的 `using` 語句。
+
+*   **動作：** 提交資料種子相關的變更。
+    *   **命令：** `git add src/SmartDeviceMonitoring.Web/Program.cs src/SmartDeviceMonitoring.Web/SmartDeviceMonitoring.Web.csproj src/SmartDeviceMonitoring.Web/Data/SeedData.cs src/SmartDeviceMonitoring.Web/Data/seeddata.json`
+    *   **命令：** `git commit -m "feat: Implement data seeding with JSON file"`
+    *   **結果：** 變更已提交到本地儲存庫。
+
+*   **動作：** 將提交的變更推送到遠端儲存庫。
+    *   **命令：** `git push`
+    *   **結果：** 變更成功推送。
