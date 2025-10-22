@@ -14,8 +14,8 @@ namespace SmartDeviceMonitoring.Web.Data
     {
         private class SeedDataContent
         {
-            public List<Device> Devices { get; set; }
-            public List<SensorType> SensorTypes { get; set; }
+            public List<Device> Devices { get; set; } = new List<Device>(); // Initialized
+            public List<SensorType> SensorTypes { get; set; } = new List<SensorType>(); // Initialized
         }
 
         public static async Task Initialize(IServiceProvider serviceProvider)

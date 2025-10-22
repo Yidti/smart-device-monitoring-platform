@@ -12,17 +12,17 @@ namespace SmartDeviceMonitoring.Web.Models
 
         [Required]
         [StringLength(255)]
-        public string SensorName { get; set; }
+        public string SensorName { get; set; } = string.Empty; // Initialized
 
         [Required]
         public int DeviceId { get; set; }
         [ForeignKey("DeviceId")]
-        public Device Device { get; set; }
+        public Device? Device { get; set; } // Made nullable
 
         [Required]
         public int SensorTypeId { get; set; }
         [ForeignKey("SensorTypeId")]
-        public SensorType SensorType { get; set; }
+        public SensorType? SensorType { get; set; } // Made nullable
 
         [Column(TypeName = "decimal(18, 2)")]
         public decimal? MinThreshold { get; set; }
@@ -40,7 +40,7 @@ namespace SmartDeviceMonitoring.Web.Models
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
         // Navigation properties
-        public ICollection<SensorData> SensorData { get; set; }
-        public ICollection<Alert> Alerts { get; set; }
+        public ICollection<SensorData>? SensorData { get; set; } // Made nullable
+        public ICollection<Alert>? Alerts { get; set; } // Made nullable
     }
 }

@@ -23,20 +23,20 @@ namespace SmartDeviceMonitoring.Web.Controllers
         public async Task<IActionResult> Index(int? deviceId, int? sensorTypeId, DateTime? startDate, DateTime? endDate)
         {
             IQueryable<SensorData> sensorData = _context.SensorData
-                .Include(s => s.Sensor)
-                .ThenInclude(s => s.Device)
-                .Include(s => s.Sensor.SensorType); // Include SensorType for filtering
+                .Include(s => s.Sensor!)
+                .ThenInclude(s => s.Device!)
+                .Include(s => s.Sensor!.SensorType!); // Use null-forgiving operator
 
             // Filter by Device
             if (deviceId.HasValue)
             {
-                sensorData = sensorData.Where(sd => sd.Sensor.DeviceId == deviceId.Value);
+                sensorData = sensorData.Where(sd => sd.Sensor!.DeviceId == deviceId.Value);
             }
 
             // Filter by SensorType
             if (sensorTypeId.HasValue)
             {
-                sensorData = sensorData.Where(sd => sd.Sensor.SensorTypeId == sensorTypeId.Value);
+                sensorData = sensorData.Where(sd => sd.Sensor!.SensorType!.SensorTypeId == sensorTypeId.Value);
             }
 
             // Filter by Date Range
@@ -65,9 +65,9 @@ namespace SmartDeviceMonitoring.Web.Controllers
             }
 
             var sensorData = await _context.SensorData
-                .Include(s => s.Sensor)
-                .ThenInclude(s => s.Device)
-                .Include(s => s.Sensor.SensorType) // Include SensorType for display
+                .Include(s => s.Sensor!)
+                .ThenInclude(s => s.Device!)
+                .Include(s => s.Sensor!.SensorType!) // Use null-forgiving operator
                 .FirstOrDefaultAsync(m => m.DataId == id);
             if (sensorData == null)
             {

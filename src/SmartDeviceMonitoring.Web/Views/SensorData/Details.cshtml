@@ -11,16 +11,16 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Sensor.SensorName)
+            @Html.DisplayNameFor(model => model.Sensor!.SensorName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Sensor.SensorName)
+            @Html.DisplayFor(model => model.Sensor!.SensorName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Sensor.Device.DeviceName)
+            @Html.DisplayNameFor(model => model.Sensor!.Device!.DeviceName)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Sensor.Device.DeviceName)
+            @Html.DisplayFor(model => model.Sensor!.Device!.DeviceName)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Value)

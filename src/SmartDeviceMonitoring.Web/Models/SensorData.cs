@@ -12,7 +12,7 @@ namespace SmartDeviceMonitoring.Web.Models
         [Required]
         public int SensorId { get; set; }
         [ForeignKey("SensorId")]
-        public Sensor Sensor { get; set; }
+        public Sensor? Sensor { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18, 2)")]

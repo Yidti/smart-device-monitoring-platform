@@ -10,14 +10,14 @@ namespace SmartDeviceMonitoring.Web.Models
 
         [Required]
         [StringLength(100)]
-        public string TypeName { get; set; }
+        public string TypeName { get; set; } = string.Empty; // Initialized
 
         [StringLength(50)]
-        public string Unit { get; set; }
+        public string? Unit { get; set; } // Made nullable
 
-        public string Description { get; set; }
+        public string? Description { get; set; } // Made nullable
 
         // Navigation property
-        public ICollection<Sensor> Sensors { get; set; }
+        public ICollection<Sensor>? Sensors { get; set; } // Made nullable
     }
 }

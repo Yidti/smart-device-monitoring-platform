@@ -12,12 +12,12 @@ namespace SmartDeviceMonitoring.Web.Models
 
         [Required]
         [StringLength(255)]
-        public string DeviceName { get; set; }
+        public required string DeviceName { get; set; } // Added 'required' keyword
 
         [StringLength(255)]
-        public string Location { get; set; }
+        public string? Location { get; set; }
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Required]
         public bool IsActive { get; set; } = true;
@@ -29,6 +29,6 @@ namespace SmartDeviceMonitoring.Web.Models
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
         // Navigation property
-        public ICollection<Sensor> Sensors { get; set; }
+        public ICollection<Sensor>? Sensors { get; set; }
     }
 }

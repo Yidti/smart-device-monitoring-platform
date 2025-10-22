@@ -23,13 +23,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Sensor.SensorName)
+                @Html.DisplayNameFor(model => model.Sensor!.SensorName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Sensor.Device.DeviceName)
+                @Html.DisplayNameFor(model => model.Sensor!.Device!.DeviceName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Sensor.SensorType.TypeName)
+                @Html.DisplayNameFor(model => model.Sensor!.SensorType!.TypeName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Value)
@@ -44,13 +44,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Sensor.SensorName)
+                @Html.DisplayFor(modelItem => item.Sensor!.SensorName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Sensor.Device.DeviceName)
+                @Html.DisplayFor(modelItem => item.Sensor!.Device!.DeviceName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Sensor.SensorType.TypeName)
+                @Html.DisplayFor(modelItem => item.Sensor!.SensorType!.TypeName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Value)

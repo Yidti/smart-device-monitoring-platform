@@ -17,10 +17,12 @@ namespace SmartDeviceMonitoring.Web.Pages
         public LegacyDeviceConfigModel(ApplicationDbContext context)
         {
             _context = context;
+            Device = new Device(); // Initialize Device in constructor
+            Devices = new List<Device>(); // Initialize Devices in constructor
         }
 
         [BindProperty]
-        public Device Device { get; set; }
+        public Device? Device { get; set; }
         public List<Device> Devices { get; set; }
 
         public async Task OnGetAsync(int? id)
@@ -39,32 +41,39 @@ namespace SmartDeviceMonitoring.Web.Pages
 
         public async Task<IActionResult> OnPostSaveAsync()
         {
+            if (Device == null)
+            {
+                return NotFound();
+            }
+
+            var currentDevice = Device; // Assign to a non-nullable local variable
+
             if (!ModelState.IsValid)
             {
                 Devices = await _context.Devices.OrderBy(d => d.DeviceName).ToListAsync();
                 return Page();
             }
 
-            if (Device.DeviceId == 0)
+            if (currentDevice.DeviceId == 0)
             {
                 // Create new device
-                Device.CreatedAt = DateTime.UtcNow;
-                Device.UpdatedAt = DateTime.UtcNow;
-                _context.Devices.Add(Device);
+                currentDevice.CreatedAt = DateTime.UtcNow;
+                currentDevice.UpdatedAt = DateTime.UtcNow;
+                _context.Devices.Add(currentDevice);
             }
             else
             {
                 // Update existing device
-                var deviceToUpdate = await _context.Devices.FindAsync(Device.DeviceId);
+                var deviceToUpdate = await _context.Devices.FindAsync(currentDevice.DeviceId);
                 if (deviceToUpdate == null)
                 {
                     return NotFound();
                 }
 
-                deviceToUpdate.DeviceName = Device.DeviceName;
-                deviceToUpdate.Location = Device.Location;
-                deviceToUpdate.Description = Device.Description;
-                deviceToUpdate.IsActive = Device.IsActive;
+                deviceToUpdate.DeviceName = currentDevice.DeviceName;
+                deviceToUpdate.Location = currentDevice.Location;
+                deviceToUpdate.Description = currentDevice.Description;
+                deviceToUpdate.IsActive = currentDevice.IsActive;
                 deviceToUpdate.UpdatedAt = DateTime.UtcNow;
 
                 _context.Entry(deviceToUpdate).State = EntityState.Modified;
