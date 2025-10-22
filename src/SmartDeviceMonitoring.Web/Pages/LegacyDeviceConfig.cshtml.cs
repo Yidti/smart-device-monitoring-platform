@@ -17,7 +17,7 @@ namespace SmartDeviceMonitoring.Web.Pages
         public LegacyDeviceConfigModel(ApplicationDbContext context)
         {
             _context = context;
-            Device = new Device(); // Initialize Device in constructor
+            Device = new Device { DeviceName = string.Empty }; // Initialize DeviceName
             Devices = new List<Device>(); // Initialize Devices in constructor
         }
 
@@ -35,7 +35,7 @@ namespace SmartDeviceMonitoring.Web.Pages
             }
             else
             {
-                Device = new Device(); // Initialize for new entry or no selection
+                Device = new Device { DeviceName = string.Empty }; // Initialize DeviceName
             }
         }
 
