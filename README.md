@@ -116,18 +116,35 @@
 
 ## 頁面類型說明 (Page Type Explanation)
 
-本專案的 Web 應用程式 (`SmartDeviceMonitoring.Web`) 旨在展示不同 Web 開發範式的實作能力。
+本專案的 Web 應用程式 (`SmartDeviceMonitoring.Web`) 旨在展示不同 Web 開發範式的實作能力，特別是現代 ASP.NET Core MVC 與模擬傳統 Web 應用程式風格的頁面之間的對比。
 
 ### 現代頁面 (Modern Pages)
 
 *   **範例:** 設備管理頁面 (`/Devices`), 感測器數據頁面 (`/SensorData`)。
-*   **技術:** 使用 ASP.NET Core MVC 的標準模式，包括 Razor Views、Tag Helpers、Model Binding 等現代功能。這些頁面提供流暢的用戶體驗，並利用最新的 .NET Web 技術。
-*   **目的:** 展示對現代 Web 開發框架和最佳實踐的掌握。
+*   **相關檔案/資料夾:**
+    *   `src/SmartDeviceMonitoring.Web/Controllers/DevicesController.cs`
+    *   `src/SmartDeviceMonitoring.Web/Controllers/SensorDataController.cs`
+    *   `src/SmartDeviceMonitoring.Web/Views/Devices/` (包含 `Index.cshtml`, `Details.cshtml`, `Create.cshtml`, `Edit.cshtml`, `Delete.cshtml`)
+    *   `src/SmartDeviceMonitoring.Web/Views/SensorData/` (包含 `Index.cshtml`, `Details.cshtml`)
+*   **技術特點:**
+    *   **框架:** 基於 ASP.NET Core MVC 框架，利用其內建的 Model-View-Controller (MVC) 設計模式。控制器 (Controllers) 負責處理請求、業務邏輯和數據準備；視圖 (Views) 負責呈現 UI；模型 (Models) 負責數據結構和驗證。
+    *   **渲染:** 主要採用伺服器端渲染 (Server-Side Rendering, SSR)，由伺服器生成完整的 HTML 頁面後發送給瀏覽器。
+    *   **互動:** 透過 Razor Views、Tag Helpers、Model Binding 等現代 ASP.NET Core 功能實現。客戶端互動通常使用少量 JavaScript (如 jQuery) 進行增強，但核心邏輯仍在伺服器端處理。頁面導航通常涉及完整頁面重新載入，但透過 AJAX 可實現局部更新。
+    *   **優勢:** 結構清晰，易於維護和測試，SEO 友好，啟動性能良好。
+*   **目的:** 展示對現代 ASP.NET Core Web 開發框架、設計模式和最佳實踐的掌握。
 
 ### 舊版風格頁面 (Legacy-Style Pages)
 
-*   **範例:** 舊版設備配置頁面 (尚未實作)。
-*   **技術:** 這些頁面將刻意模擬傳統 Web 應用程式的互動模式。它們將使用 Razor Page (而非 MVC View) 搭配基於 Postback 的 jQuery/AJAX 操作，避免使用現代前端框架。
-*   **目的:** 證明對傳統 Web 開發模式的理解，以及維護和擴展舊有系統的能力。這在許多企業環境中是一項寶貴的技能，因為現有系統可能採用較舊的技術。
+*   **範例:** 舊版設備配置頁面 (`/LegacyDeviceConfig`)。
+*   **相關檔案/資料夾:**
+    *   `src/SmartDeviceMonitoring.Web/Pages/LegacyDeviceConfig.cshtml.cs` (Code-behind)
+    *   `src/SmartDeviceMonitoring.Web/Pages/LegacyDeviceConfig.cshtml` (Razor Page)
+*   **技術特點:**
+    *   **框架:** 雖然仍運行在 ASP.NET Core 環境中，但刻意模擬了早期 Web 應用程式的互動模式，例如 ASP.NET Web Forms 或經典 ASP 應用程式。
+    *   **渲染:** 採用 Razor Page 模型，但其客戶端互動模式模擬了傳統的「Postback」行為。
+    *   **互動:** 嚴重依賴 jQuery 和傳統的 AJAX 呼叫來模擬表單提交和頁面局部更新，而非使用現代前端框架（如 React, Angular, Vue）來管理複雜的客戶端狀態和 UI 渲染。每次互動後，頁面可能會模擬部分或全部重新載入，或者透過 AJAX 請求伺服器端渲染的 HTML 片段來更新內容。頁面邏輯通常更緊密地耦合在單個頁面檔案及其 Code-behind 中。
+    *   **優勢:** 對於簡單的表單操作和數據展示，開發速度快；對於熟悉傳統 Web 開發的開發者來說，學習曲線較低。
+    *   **劣勢:** 隨著應用程式複雜度增加，維護性可能下降；客戶端體驗不如現代 SPA 流暢。
+*   **目的:** 證明對傳統 Web 開發模式的深入理解，以及在現代環境中維護、理解和擴展舊有系統的能力。這在許多企業環境中是一項寶貴的技能，因為現有系統可能採用較舊的技術和互動範式。
 
 ---
