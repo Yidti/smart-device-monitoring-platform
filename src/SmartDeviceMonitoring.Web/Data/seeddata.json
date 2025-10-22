@@ -1,0 +1,26 @@
+[
+  {
+    "DeviceName": "Server Room AC Unit",
+    "Location": "Server Room 1",
+    "Description": "Main AC unit for server room",
+    "IsActive": true
+  },
+  {
+    "DeviceName": "Production Line Sensor Hub",
+    "Location": "Production Line A",
+    "Description": "Collects data from various sensors on Production Line A",
+    "IsActive": true
+  },
+  {
+    "DeviceName": "Warehouse Humidity Monitor",
+    "Location": "Warehouse Section C",
+    "Description": "Monitors humidity levels in warehouse",
+    "IsActive": true
+  },
+  {
+    "DeviceName": "Office Temperature Sensor",
+    "Location": "Main Office",
+    "Description": "Monitors ambient temperature in the main office",
+    "IsActive": false
+  }
+]
