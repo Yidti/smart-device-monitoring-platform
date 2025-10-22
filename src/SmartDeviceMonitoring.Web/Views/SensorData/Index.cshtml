@@ -1,0 +1,48 @@
+@model IEnumerable<SmartDeviceMonitoring.Web.Models.SensorData>
+
+@{ 
+    ViewData["Title"] = "Sensor Data";
+}
+
+<h1>Sensor Data</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Sensor.SensorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sensor.Device.DeviceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Timestamp)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sensor.SensorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sensor.Device.DeviceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Value)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Timestamp)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.DataId">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

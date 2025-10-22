@@ -140,3 +140,16 @@
 *   **動作：** 將提交的變更推送到遠端儲存庫。
     *   **命令：** `git push`
     *   **結果：** 變更成功推送。
+
+### 5. 實作 SensorData 顯示功能
+
+**目標：** 在 Web 應用程式中顯示感測器數據。
+
+*   **動作：** 建立 `SensorDataController.cs` 處理感測器數據的顯示邏輯。
+    *   **結果：** `SensorDataController.cs` 成功建立。
+
+*   **動作：** 建立 `src/SmartDeviceMonitoring.Web/Views/SensorData` 目錄。
+    *   **結果：** 目錄成功建立。
+
+*   **動作：** 建立感測器數據相關的 Razor 視圖 (`Index.cshtml`, `Details.cshtml`)。
+    *   **結果：** 所有視圖檔案成功建立。
